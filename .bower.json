@@ -1,0 +1,13 @@
+{
+  "name": "jquery-hal",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "main": "jquery-hal.js",
+  "dependencies": {
+    "rfc6570": "~0.1",
+    "jquery": "~1"
+  }
+}
