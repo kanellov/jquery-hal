@@ -183,7 +183,7 @@
                     }
                     return null;
                 default:
-                    return $.Deferred.reject(hxr.status);
+                    return $.Deferred().reject(hxr.status);
             }
         });
 
