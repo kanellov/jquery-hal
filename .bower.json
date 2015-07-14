@@ -9,5 +9,8 @@
   "dependencies": {
     "rfc6570": "~0.1",
     "jquery": "~1"
+  },
+  "devDependencies": {
+    "jquery-mockjax": "*"
   }
 }

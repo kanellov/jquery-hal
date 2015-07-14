@@ -8,6 +8,7 @@ module.exports = function(config) {
         files: [
             'bower_components/jquery/dist/jquery.js',
             'bower_components/rfc6570/rfc6570.js',
+            'bower_components/jquery-mockjax/dist/jquery.mockjax.js',
             'jquery-hal.js',
             'test/**.js'
         ],
