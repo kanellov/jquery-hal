@@ -8,7 +8,7 @@
   "main": "jquery-hal.js",
   "dependencies": {
     "rfc6570": "~0.1",
-    "jquery": "~1"
+    "jquery": "*"
   },
   "devDependencies": {
     "jquery-mockjax": "*"
