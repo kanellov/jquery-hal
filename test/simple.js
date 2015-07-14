@@ -1,5 +1,4 @@
 describe("simple", function () {
-    var halClient;
 
     it('should get empty respurce', function () {
         var handler = $.mockjax({
