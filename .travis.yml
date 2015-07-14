@@ -6,7 +6,7 @@ before_install:
 install:
 - npm install bower jshint karma-cli --global --quiet
 - npm install --quiet
-- bower install --quiet
+- bower install
 script:
 - jshint . -e .json
 - karma start --browsers=PhantomJS,Firefox
