@@ -34,7 +34,7 @@ module.exports = function(config) {
 
         autoWatch: false,
         singleRun: true,
-        browsers: ['PhantomJS']
+        browsers: ['PhantomJS','Firefox']
     });
 
 };

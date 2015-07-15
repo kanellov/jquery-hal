@@ -159,10 +159,10 @@
     }
 
     function callService(method, href, options, data) {
-        if (!options) options = {};
-        if (!options.headers) options.headers = {};
-        if (!options.headers['Content-Type']) options.headers['Content-Type'] = 'application/json';
-        if (!options.headers.Accept) options.headers.Accept = 'application/hal+json,application/json';
+        options = options || {};
+        options.headers = options.headers || {};
+        options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
+        options.headers.Accept = options.headers.Accept || 'application/hal+json,application/json';
 
         var resource = $.ajax({
             method: method,
@@ -191,12 +191,12 @@
     }
 
     function resolveUrl(baseHref, href) {
-        var resultHref, reFullUrl, baseHrefMatch, hrefMatch;
+        var resultHref, reFullUrl, baseHrefMatch, hrefMatch, partIndex;
         resultHref = '';
         reFullUrl = /^((?:\w+\:)?)((?:\/\/)?)([^\/]*)((?:\/.*)?)$/;
         baseHrefMatch = reFullUrl.exec(baseHref);
         hrefMatch = reFullUrl.exec(href);
-        for (var partIndex = 1; partIndex < 5; partIndex++) {
+        for (partIndex = 1; partIndex < 5; partIndex++) {
             if (hrefMatch[partIndex]) resultHref += hrefMatch[partIndex];
             else resultHref += baseHrefMatch[partIndex];
         }
