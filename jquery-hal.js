@@ -1,21 +1,15 @@
 (function( global, factory) {
 
-    if (typeof module === "object" && typeof module.exports === "object" ) {
-        module.exports = global.document ?
-            factory( global, true ) :
-            function( w ) {
-                if ( !(w.jQuery || w.rfc6570)) {
-                    throw new Error( "jQuery is not defined. jQuery-hal cannot be initialized" );
-                }
-                return factory( w );
-            };
+    if(global.jQuery === "undefined" || global.rfc6570 === "undefined") {
+        throw new error("jQuery or rfc6570 library is not defined. jQuery-hal cannot be initialized");
     } else {
 
-        if(global.jQuery === "undefined" || global.rfc6570 === "undefined") {
-            throw new error("jQuery or rfc6570 library is not defined. jQuery-hal cannot be initialized");
+        if (typeof module === "object" && typeof module.exports === "object" ) {
+            module.exports = factory(global);
         } else {
             factory(global);
         }
+
     }
 }(typeof window !== "undefined" ? window : this, function (window) {
 
