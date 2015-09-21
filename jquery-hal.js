@@ -1,7 +1,7 @@
-(function( global, factory) {
+;(function(global, factory) {
 
-    if(global.jQuery === "undefined" || global.rfc6570 === "undefined") {
-        throw new error("jQuery or rfc6570 library is not defined. jQuery-hal cannot be initialized");
+    if(typeof global.jQuery === "undefined" || typeof global.rfc6570 === "undefined") {
+        throw new Error("jQuery or rfc6570 library is not defined. jQuery-hal cannot be initialized");
     } else {
 
         if (typeof module === "object" && typeof module.exports === "object" ) {
@@ -28,11 +28,11 @@
             embedded,
             xhrProp = xhr;
 
-        var linksAttribute = options.linksAttribute || '_links',
-            embeddedAttribute = options.embeddedAttribute || '_embedded',
-            links = {},
-            embedded = {}
-            href = getSelfLink(href, data).href;
+        linksAttribute = options.linksAttribute || '_links';
+        embeddedAttribute = options.embeddedAttribute || '_embedded';
+        links = {};
+        embedded = {};
+        href = getSelfLink(href, data).href;
 
         defineHiddenProperty(this, '$href', function (rel, params) {
             return (rel in links) ? hrefLink(links[rel], params) : null;
