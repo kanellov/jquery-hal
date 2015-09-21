@@ -11,9 +11,13 @@
     "connect": "^2.14.4",
     "karma": "^0.12.16",
     "karma-coverage": "0.2",
-    "karma-firefox-launcher": "0.1",
-    "karma-jasmine": "^0.1.5",
-    "karma-phantomjs-launcher": "0.1"
+    "karma-qunit": "~0.1.5",
+    "karma-phantomjs-launcher": "0.1",
+    // "karma-chrome-launcher": "^0.2.0",
+    // "karma-firefox-launcher": "0.1",
+    // "karma-ie-launcher": "0.2.0",
+    // "karma-opera-launcher": "^0.2.0",
+    // "karma-safari-launcher": "^0.1.1"
   },
   "scripts": {
     "test": "karma start"
