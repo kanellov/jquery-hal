@@ -1,80 +1,90 @@
-/* global describe, it, beforeEach, afterEach, expect */
-/* global module, inject */
 
-describe('special attribute names', function () {
+QUnit.module("Special attribute names",{
+    beforeEach: function() {
+        /**
+         * clears all mock calls before each test
+         */
+        $.mockjax.clear();
+    }
+});
 
-    it('should get embedde item resource', function () {
-        var handler = $.mockjax({
-            url: "/",
-            type: "GET",
-            responseText: {
-                "links": {
-                    "self": "/"
-                },
-                "embedded": {
-                    "testing": {
-                        "links": {
-                            "self": "/testing"
-                        },
-                        "id": "one!"
-                    }
+
+QUnit.test("should get embedded item resource", function(assert) {
+    var done = assert.async();
+
+    $.mockjax({
+        url: "/",
+        type: "GET",
+        responseText: {
+            "links": {
+                "self": "/"
+            },
+            "embedded": {
+                "testing": {
+                    "links": {
+                        "self": "/testing"
+                    },
+                    "id": "one!"
                 }
             }
-        });
-
-        var resource = $.hal.$get('/', {
-            linksAttribute: "links",
-            embeddedAttribute: "embedded"
-        }).then(function (resource) {
-            expect(resource).toEqual({});
-
-            return resource.$get('testing').then(function (resource) {
-                expect(resource).toEqual({
-                    "id": "one!"
-                });
-            });
-        });
-
-        $.mockjax.clear(handler);
+        }
     });
 
-    it('should get linked item resource', function () {
-        var handler = $.mockjax({
-            url: "/",
-            type: "GET",
-            responseText: {
-                "links": {
-                    "self": "/",
-                    "testing": "/testing"
-                }
-            }
-        });
+    $.hal.$get("/", {
+        linksAttribute: "links",
+        embeddedAttribute: "embedded"
+    }).then(function (resource) {
 
-        var handler2 = $.mockjax({
-            url: "/testing",
-            type: "GET",
-            responseText: {
-                "links": {
-                    "self": "/testing"
-                },
+        assert.propEqual(resource, {});
+
+        resource.$get("testing").then(function (r) {
+
+            assert.propEqual(r, {
                 "id": "one!"
+            },
+            "embedded resource should have id property");
+
+            done();
+        });
+    });
+
+});
+
+QUnit.test("should get linked item resource", function(assert) {
+    var done = assert.async();
+    $.mockjax({
+        url: "/",
+        type: "GET",
+        responseText: {
+            "links": {
+                "self": "/",
+                "testing": "/testing"
             }
-        });
+        }
+    });
 
-        var resource = $.hal.$get('/', {
-            linksAttribute: "links",
-            embeddedAttribute: "embedded"
-        }).then(function (resource) {
-            expect(resource).toEqual({});
+    $.mockjax({
+        url: "/testing",
+        type: "GET",
+        responseText: {
+            "links": {
+                "self": "/testing"
+            },
+            "id": "one!"
+        }
+    });
 
-            return resource.$get('testing').then(function (resource) {
-                expect(resource).toEqual({
-                    "id": "one!"
-                });
+    $.hal.$get("/", {
+        linksAttribute: "links",
+        embeddedAttribute: "embedded"
+    }).then(function (resource) {
+        assert.propEqual(resource, {});
+
+        resource.$get("testing").then(function (r) {
+            assert.propEqual(r, {
+                "id": "one!"
             });
+            done();
         });
-
-        $.mockjax.clear(handler);
-        $.mockjax.clear(handler2);
     });
 });
