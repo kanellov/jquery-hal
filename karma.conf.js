@@ -30,7 +30,7 @@ module.exports = function(config) {
 
         reporters: ["dots", "coverage"],
         preprocessors: {
-            "jquery-hal_new.js": sourcePreprocessors
+            "jquery-hal.js": sourcePreprocessors
         },
 
         coverageReporter: {
