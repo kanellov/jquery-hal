@@ -1,6 +1,5 @@
 {
   "name": "jquery-hal",
-  "version": "0.0.1",
   "description": "Hal client for jQuery",
   "repository": "git@github.com:kanellov/jquery-hal.git",
   "author": "kanellov <contact@kanellov.com>",
@@ -16,7 +15,7 @@
     "karma-phantomjs-launcher": "0.1"
   },
   "scripts": {
-    "lint": "jshint jquery-hal.js",
+    "lint": "jshint jquery-hal.js test/ -e .json",  
     "test": "npm run-script lint; karma start"
   }
 }

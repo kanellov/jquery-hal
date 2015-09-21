@@ -116,6 +116,7 @@
          *
          */
         function embedResource(resource) {
+            var href;
             if (Array.isArray(resource)){
                 return resource.map(function (resource) {
                     return embedResource(resource);
@@ -123,7 +124,7 @@
             }
 
             if(resource instanceof(Resource)) {
-                var href = resource.$href('self');
+                href = resource.$href('self');
                 embedded[href] = $.Deferred().resolve(resource);
             }
         }
@@ -173,12 +174,18 @@
          *
          */
         function resolveUrl(baseHref, href) {
-            var resultHref = '';
-            var reFullUrl = /^((?:\w+\:)?)((?:\/\/)?)([^\/]*)((?:\/.*)?)$/;
-            var baseHrefMatch = reFullUrl.exec(baseHref);
-            var hrefMatch = reFullUrl.exec(href);
+            var resultHref,
+                reFullUrl,
+                baseHrefMatch,
+                hrefMatch,
+                partIndex;
 
-            for (var partIndex = 1; partIndex < 5; partIndex++) {
+            resultHref = '';
+            reFullUrl = /^((?:\w+\:)?)((?:\/\/)?)([^\/]*)((?:\/.*)?)$/;
+            baseHrefMatch = reFullUrl.exec(baseHref);
+            hrefMatch = reFullUrl.exec(href);
+
+            for (partIndex = 1; partIndex < 5; partIndex++) {
                 if (hrefMatch[partIndex])
                     resultHref += hrefMatch[partIndex];
                 else
@@ -252,19 +259,14 @@
      * makes all the xhr calls
      */
     function callService(method, href, options, data) {
-        if (!options)
-            options = {};
+        var resource;
 
-        if (!options.headers)
-            options.headers = {};
+        options = options || {};
+        options.headers = options.headers || {};
+        options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
+        options.headers.Accept = options.headers.Accept || 'application/hal+json,application/json';
 
-        if (!options.headers['Content-Type'])
-            options.headers['Content-Type'] = 'application/json';
-
-        if (!options.headers.Accept)
-            options.headers.Accept = 'application/hal+json,application/json';
-
-        var resource = $.ajax({
+        resource = $.ajax({
             method: method,
             url: options.transformUrl ? options.transformUrl(href) : href,
             headers: options.headers,
